@@ -4,12 +4,8 @@ namespace journal_service.Domain;
 
 public class JournalEntry
 {
-    public JournalEntry(DateTime entryDate, string entryBy, string entry)
-    {
-        EntryDate = entryDate;
-        EntryBy = entryBy;
-        Entry = entry;
-    }
+    public JournalEntry(string entryBy, string entry) =>
+        (EntryBy, Entry) = (entryBy, entry);
 
     public Guid Id { get; private set; } = Guid.NewGuid();
 
