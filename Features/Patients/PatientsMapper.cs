@@ -9,5 +9,10 @@ public class PatientsMapper : Profile
     {
         CreateMap<Patient, GetAllPatients.PatientResult>()
             .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.GetFullName()));
+
+        CreateMap<Patient, AddPatient.PatientResult>();
+
+        CreateMap<Patient, GetPatientById.PatientResult>()
+            .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.GetFullName()));
     }
 }
