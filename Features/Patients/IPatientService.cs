@@ -6,7 +6,7 @@ public interface IPatientService
 {
     Task<ICollection<Patient>> GetAllPatientsAsync();
 
-    Task<Patient> GetPatientAsync(string socialSecurityNumber);
+    Task<Patient> GetPatientAsync(Guid Id);
 
     void AddPatient(Patient patient);
 

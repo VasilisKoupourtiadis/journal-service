@@ -19,6 +19,6 @@ public class PatientService : IPatientService
     public async Task<ICollection<Patient>> GetAllPatientsAsync() =>
         await context.Patients.ToListAsync();
 
-    public async Task<Patient> GetPatientAsync(string socialSecurityNumber) =>
-        await context.Patients.FirstOrDefaultAsync(x => x.SocialSecurityNumber.Equals(socialSecurityNumber));
+    public async Task<Patient> GetPatientAsync(Guid Id) =>
+        await context.Patients.FirstOrDefaultAsync(x => x.Id.Equals(Id));
 }
