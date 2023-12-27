@@ -10,11 +10,11 @@ public class GetAllPatients
 
     public class PatientResult
     {
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
-        public string FullName { get; private set; } = string.Empty;
+        public string FullName { get; set; } = string.Empty;
 
-        public string SocialSecurityNumber { get; private set; } = string.Empty;
+        public string SocialSecurityNumber { get; set; } = string.Empty;
     }
 
     public class Handler : IRequestHandler<GetPatientsQuery, ICollection<PatientResult>> 
@@ -26,7 +26,7 @@ public class GetAllPatients
         public Handler(IServiceManager serviceManager, IMapper mapper) =>
             (this.serviceManager, this.mapper) = (serviceManager, mapper);
 
-        public async Task<ICollection<PatientResult>> Handle(GetPatientsQuery query, CancellationToken cancellationToken)
+        public async Task<ICollection<PatientResult>> Handle(GetPatientsQuery request, CancellationToken cancellationToken)
         {
             var patients = await serviceManager.Patient.GetAllPatientsAsync();
 
