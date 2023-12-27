@@ -5,4 +5,6 @@ namespace journal_service.ServiceManager;
 public interface IServiceManager
 {
     IPatientService Patient { get; }
+
+    Task SaveAsync();
 }

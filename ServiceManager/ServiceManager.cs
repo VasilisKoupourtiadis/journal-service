@@ -22,4 +22,6 @@ public class ServiceManager : IServiceManager
             return service;
         }
     }
+
+    public Task SaveAsync() => context.SaveChangesAsync();
 }
