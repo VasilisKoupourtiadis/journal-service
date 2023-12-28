@@ -18,6 +18,10 @@ public class GetPatientById
         public string FullName { get; set; } = string.Empty;
 
         public string SocialSecurityNumber { get; set; } = string.Empty;
+
+        public string Email { get; set; } = string.Empty;
+
+        public int? PhoneNumber { get; set; }
     }
 
     public class Handler : IRequestHandler<GetPatientQuery, PatientResult>

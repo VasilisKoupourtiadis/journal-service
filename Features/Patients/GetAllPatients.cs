@@ -15,6 +15,10 @@ public class GetAllPatients
         public string FullName { get; set; } = string.Empty;
 
         public string SocialSecurityNumber { get; set; } = string.Empty;
+
+        public string Email { get; set; } = string.Empty;
+
+        public int? PhoneNumber { get; set; }
     }
 
     public class Handler : IRequestHandler<GetPatientsQuery, ICollection<PatientResult>> 
