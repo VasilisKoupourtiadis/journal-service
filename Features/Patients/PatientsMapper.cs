@@ -14,5 +14,9 @@ public class PatientsMapper : Profile
 
         CreateMap<Patient, GetPatientById.PatientResult>()
             .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.GetFullName()));
+
+        CreateMap<Patient, UpdatePatient.UpdatePatientResult>();
+
+        CreateMap<UpdatePatient.UpdatePatientResult, Patient>();
     }
 }

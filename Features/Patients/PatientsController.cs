@@ -4,6 +4,7 @@ using static journal_service.Features.Patients.GetAllPatients;
 using static journal_service.Features.Patients.GetPatientById;
 using static journal_service.Features.Patients.AddPatient;
 using static journal_service.Features.Patients.RemovePatient;
+using static journal_service.Features.Patients.UpdatePatient;
 
 namespace journal_service.Features.Patients;
 
@@ -56,6 +57,17 @@ public class PatientsController : ControllerBase
         { 
             Id = id 
         };
+
+        await mediator.Send(command);
+
+        return NoContent();
+    }
+
+    [HttpPatch("{id:guid}")]
+    public async Task<ActionResult> UpdatePatient(Guid id, UpdatePatientCommand command)
+    {
+        if (id != command.Id) 
+            return Conflict($"Id mismatch. Request path Id [${id}] and request body Id [${command.Id}] do not match");
 
         await mediator.Send(command);
 
