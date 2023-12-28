@@ -31,10 +31,9 @@ public class GetPatientById
 
         public async Task<PatientResult> Handle(GetPatientQuery request, CancellationToken cancellationToken)
         {
-            var patient = await serviceManager.Patient.GetPatientAsync(request.Id);
-
-            if (patient is null) throw new ArgumentNullException(nameof(patient), "Could not find patient");
-
+            var patient = await serviceManager.Patient.GetPatientAsync(request.Id)
+                ?? throw new ArgumentNullException(nameof(request), "Could not find patient");
+            
             var result = mapper.Map<PatientResult>(patient);
 
             return result;

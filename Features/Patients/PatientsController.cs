@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using static journal_service.Features.Patients.GetAllPatients;
 using static journal_service.Features.Patients.GetPatientById;
 using static journal_service.Features.Patients.AddPatient;
+using static journal_service.Features.Patients.RemovePatient;
 
 namespace journal_service.Features.Patients;
 
@@ -46,6 +47,19 @@ public class PatientsController : ControllerBase
         var patient = await mediator.Send(command);        
 
         return CreatedAtRoute("GetPatientAsync", new { id = patient.Id }, patient);
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<ActionResult> RemovePatient(Guid id)
+    {
+        var command = new RemovePatientCommand 
+        { 
+            Id = id 
+        };
+
+        await mediator.Send(command);
+
+        return NoContent();
     }
 
 }
