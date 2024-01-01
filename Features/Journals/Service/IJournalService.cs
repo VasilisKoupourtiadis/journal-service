@@ -1,6 +1,6 @@
 ﻿using journal_service.Domain;
 
-namespace journal_service.Features.Journals;
+namespace journal_service.Features.Journals.Service;
 
 public interface IJournalService
 {

@@ -1,5 +1,5 @@
-﻿using journal_service.Features.Journals;
-using journal_service.Features.Patients;
+﻿using journal_service.Features.Journals.Service;
+using journal_service.Features.Patients.Service;
 
 namespace journal_service.ServiceManager;
 
