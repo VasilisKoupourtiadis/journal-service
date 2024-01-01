@@ -3,7 +3,7 @@ using journal_service.Domain;
 using journal_service.ServiceManager;
 using MediatR;
 
-namespace journal_service.Features.Patients;
+namespace journal_service.Features.Patients.Commands;
 
 public class AddPatient
 {
@@ -15,7 +15,7 @@ public class AddPatient
 
         public string SocialSecurityNumber { get; set; } = string.Empty;
 
-        public string Email { get; set; } = string.Empty; 
+        public string Email { get; set; } = string.Empty;
 
         public int PhoneNumber { get; set; }
     }
@@ -44,13 +44,13 @@ public class AddPatient
         public Handler(IServiceManager serviceManager, IMapper mapper) =>
             (this.serviceManager, this.mapper) = (serviceManager, mapper);
 
-        public async Task <PatientResult> Handle(AddPatientCommand request, CancellationToken cancellationToken)
+        public async Task<PatientResult> Handle(AddPatientCommand request, CancellationToken cancellationToken)
         {
             var patient = new Patient(
-                request.FirstName, 
-                request.LastName, 
-                request.SocialSecurityNumber, 
-                request.Email, 
+                request.FirstName,
+                request.LastName,
+                request.SocialSecurityNumber,
+                request.Email,
                 request.PhoneNumber);
 
             serviceManager.Patient.AddPatient(patient);

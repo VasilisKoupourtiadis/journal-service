@@ -2,7 +2,7 @@
 using journal_service.ServiceManager;
 using MediatR;
 
-namespace journal_service.Features.Patients;
+namespace journal_service.Features.Patients.Queries;
 
 public class GetAllPatients
 {
@@ -21,7 +21,7 @@ public class GetAllPatients
         public int? PhoneNumber { get; set; }
     }
 
-    public class Handler : IRequestHandler<GetPatientsQuery, ICollection<PatientResult>> 
+    public class Handler : IRequestHandler<GetPatientsQuery, ICollection<PatientResult>>
     {
         private readonly IServiceManager serviceManager;
 

@@ -1,10 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using static journal_service.Features.Patients.GetAllPatients;
-using static journal_service.Features.Patients.GetPatientById;
-using static journal_service.Features.Patients.AddPatient;
-using static journal_service.Features.Patients.RemovePatient;
-using static journal_service.Features.Patients.UpdatePatient;
+using static journal_service.Features.Patients.Queries.GetAllPatients;
+using static journal_service.Features.Patients.Queries.GetPatient;
+using static journal_service.Features.Patients.Commands.AddPatient;
+using static journal_service.Features.Patients.Commands.RemovePatient;
+using static journal_service.Features.Patients.Commands.UpdatePatient;
+using journal_service.Features.Patients.Queries;
 
 namespace journal_service.Features.Patients;
 
@@ -30,7 +31,7 @@ public class PatientsController : ControllerBase
     }
 
     [HttpGet("{id:guid}", Name = "GetPatientAsync")]
-    public async Task<ActionResult<GetPatientById.PatientResult>> GetPatientAsync(Guid id)
+    public async Task<ActionResult<GetPatient.PatientResult>> GetPatientAsync(Guid id)
     {
         var query = new GetPatientQuery
         {

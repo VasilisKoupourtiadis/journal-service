@@ -1,14 +1,14 @@
 ﻿using journal_service.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace journal_service.Features.Patients;
+namespace journal_service.Features.Patients.Service;
 
 public class PatientService : IPatientService
 {
     private readonly ApplicationContext context;
 
     public PatientService(ApplicationContext context) =>
-    (this.context) = (context);
+    this.context = context;
 
     public void AddPatient(Patient patient) =>
         context.Patients.Add(patient);

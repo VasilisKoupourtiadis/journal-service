@@ -3,7 +3,7 @@ using journal_service.ServiceManager;
 using MediatR;
 using Microsoft.AspNetCore.JsonPatch;
 
-namespace journal_service.Features.Patients;
+namespace journal_service.Features.Patients.Commands;
 
 public class UpdatePatient
 {
@@ -43,7 +43,7 @@ public class UpdatePatient
             var patient = await serviceManager.Patient.GetPatientAsync(request.Id)
                 ?? throw new ArgumentNullException(nameof(request), "Could not find patient");
 
-            var result = mapper.Map<UpdatePatientResult>(patient);            
+            var result = mapper.Map<UpdatePatientResult>(patient);
 
             request.PatchDoc.ApplyTo(result);
 

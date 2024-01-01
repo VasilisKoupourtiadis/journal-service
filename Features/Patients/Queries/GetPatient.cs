@@ -2,9 +2,9 @@
 using journal_service.ServiceManager;
 using MediatR;
 
-namespace journal_service.Features.Patients;
+namespace journal_service.Features.Patients.Queries;
 
-public class GetPatientById
+public class GetPatient
 {
     public class GetPatientQuery : IRequest<PatientResult>
     {
@@ -37,7 +37,7 @@ public class GetPatientById
         {
             var patient = await serviceManager.Patient.GetPatientAsync(request.Id)
                 ?? throw new ArgumentNullException(nameof(request), "Could not find patient");
-            
+
             var result = mapper.Map<PatientResult>(patient);
 
             return result;

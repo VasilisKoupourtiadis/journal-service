@@ -1,6 +1,6 @@
 ﻿using journal_service.Domain;
 
-namespace journal_service.Features.Patients;
+namespace journal_service.Features.Patients.Service;
 
 public interface IPatientService
 {
