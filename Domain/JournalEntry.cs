@@ -4,8 +4,14 @@ namespace journal_service.Domain;
 
 public class JournalEntry
 {
-    public JournalEntry(string entryBy, string entry) =>
-        (EntryBy, Entry) = (entryBy, entry);
+    public JournalEntry() { }
+
+    public JournalEntry(string entryBy, string entry, Journal journal) 
+    {
+        EntryBy = entryBy;
+        Entry = entry;
+        Journal = journal;
+    }
 
     public Guid Id { get; private set; } = Guid.NewGuid();
 
@@ -16,4 +22,8 @@ public class JournalEntry
 
     [MaxLength(1000)]
     public string Entry { get; private set; } = string.Empty;
+
+    public Guid JournalId { get; private set; }
+
+    public Journal Journal { get; private set; }
 }
