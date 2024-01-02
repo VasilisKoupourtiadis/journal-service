@@ -23,4 +23,11 @@ public class JournalService : IJournalService
         await context.Journals
             .Include(x => x.Patient)
             .FirstOrDefaultAsync(x => x.Id.Equals(id));
+
+    public void AddJournalEntry(Journal journal, JournalEntry journalEntry)
+    {
+        journal.AddEntry(journalEntry);
+
+        context.Add(journalEntry);
+    }    
 }

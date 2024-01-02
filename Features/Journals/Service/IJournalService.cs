@@ -11,4 +11,6 @@ public interface IJournalService
     Task<Journal> GetJournalAsync(Guid id);
 
     void RemoveJournal(Journal journal);
+
+    void AddJournalEntry(Journal journal, JournalEntry journalEntry);
 }

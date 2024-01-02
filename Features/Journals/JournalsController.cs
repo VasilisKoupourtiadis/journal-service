@@ -4,6 +4,7 @@ using static journal_service.Features.Journals.Queries.GetAllJournals;
 using static journal_service.Features.Journals.Commands.AddJournal;
 using static journal_service.Features.Journals.Queries.GetJournal;
 using static journal_service.Features.Journals.Commands.RemoveJournal;
+using static journal_service.Features.Journals.Commands.AddJournalEntry;
 using journal_service.Features.Journals.Queries;
 
 namespace journal_service.Features.Journals;
@@ -60,5 +61,14 @@ public class JournalsController : ControllerBase
         await mediator.Send(command);
 
         return NoContent();
+    }
+
+    [HttpPost]
+    [Route("/api/[controller]/entry")]
+    public async Task<ActionResult> AddJournalEntry([FromBody] AddJournalEntryCommand command)
+    {
+        var journalEntry = await mediator.Send(command);
+
+        return Created("", journalEntry);
     }
 }
