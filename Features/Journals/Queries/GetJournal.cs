@@ -34,7 +34,7 @@ public class GetJournal
         public async Task<JournalResult> Handle(GetJournalQuery request, CancellationToken cancellationToken)
         {
             var journal = await serviceManager.Journal.GetJournalAsync(request.Id)
-                ?? throw new ArgumentNullException(nameof(request), "Could not find patient");
+                ?? throw new ArgumentNullException(nameof(request), "Could not find journal");
 
             var result = mapper.Map<JournalResult>(journal);
 

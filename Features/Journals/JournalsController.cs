@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using static journal_service.Features.Journals.Queries.GetAllJournals;
 using static journal_service.Features.Journals.Commands.AddJournal;
 using static journal_service.Features.Journals.Queries.GetJournal;
+using static journal_service.Features.Journals.Commands.RemoveJournal;
 using journal_service.Features.Journals.Queries;
 
 namespace journal_service.Features.Journals;
@@ -46,5 +47,18 @@ public class JournalsController : ControllerBase
         var journal = await mediator.Send(command);
 
         return CreatedAtRoute("GetJournalAsync", new { id = journal.Id }, journal);
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<ActionResult> RemoveJournal(Guid id)
+    {
+        var command = new RemoveJournalCommand() 
+        { 
+            Id = id 
+        };
+
+        await mediator.Send(command);
+
+        return NoContent();
     }
 }
