@@ -22,8 +22,11 @@ public class JournalsMapper : Profile
             .ForMember(dest => dest.SocialSecurityNumber, opt => opt.MapFrom(src => src.Patient.SocialSecurityNumber));
 
         CreateMap<JournalEntry, AddJournalEntry.JournalEntryResult>()
-            .ForMember(dest => dest.EntryDate, opt => opt.MapFrom(src => src.EntryDate.ToString("MMMM dd, yyyy")))
+            .ForMember(dest => dest.EntryDate, opt => opt.MapFrom(src => src.EntryDate.ToString("HH:mm, MMMM dd, yyyy")))
             .ForMember(dest => dest.PatientId, opt => opt.MapFrom(src => src.Journal.PatientId));
 
+        CreateMap<JournalEntry, GetJournalEntry.JournalEntryResult>()
+            .ForMember(dest => dest.EntryDate, opt => opt.MapFrom(src => src.EntryDate.ToString("HH:mm, MMMM dd, yyyy")))
+            .ForMember(dest => dest.PatientId, opt => opt.MapFrom(src => src.Journal.PatientId));
     }
 }
