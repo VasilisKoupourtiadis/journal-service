@@ -17,8 +17,8 @@ public class PatientService : IPatientService
         context.Patients.Remove(patient);
 
     public async Task<ICollection<Patient>> GetAllPatientsAsync() =>
-        await context.Patients.ToListAsync();
+        await context.Patients.Include(x => x.Journal.Entries).ToListAsync();
 
     public async Task<Patient> GetPatientAsync(Guid Id) =>
-        await context.Patients.FirstOrDefaultAsync(x => x.Id.Equals(Id));
+        await context.Patients.Include(x => x.Journal.Entries).FirstOrDefaultAsync(x => x.Id.Equals(Id));
 }
