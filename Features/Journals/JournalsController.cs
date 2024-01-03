@@ -6,6 +6,7 @@ using static journal_service.Features.Journals.Queries.GetJournal;
 using static journal_service.Features.Journals.Commands.RemoveJournal;
 using static journal_service.Features.Journals.Commands.AddJournalEntry;
 using static journal_service.Features.Journals.Queries.GetJournalEntry;
+using static journal_service.Features.Journals.Queries.GetAllJournalEntriesForPatient;
 using journal_service.Features.Journals.Queries;
 
 namespace journal_service.Features.Journals;
@@ -62,6 +63,20 @@ public class JournalsController : ControllerBase
         await mediator.Send(command);
 
         return NoContent();
+    }
+
+    [HttpGet]
+    [Route("/api/[controller]/{patientId:guid}/entries")]
+    public async Task<ActionResult<ICollection<JournalEntriesResult>>> GetJournalEntriesAsync(Guid patientId)
+    {
+        var query = new GetAllJournalEntriesForPatientQuery
+        {
+            PatientId = patientId
+        };
+
+        var journals = await mediator.Send(query);
+
+        return Ok(journals);
     }
 
     [HttpGet]
