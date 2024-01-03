@@ -39,7 +39,9 @@ public class AddJournal
 
             var journal = new Journal(patient);
 
-            serviceManager.Journal.AddJournal(journal);
+            patient.RegisterJournal(journal);
+
+            serviceManager.Journal.AddJournal(journal);            
 
             await serviceManager.SaveAsync();
 
