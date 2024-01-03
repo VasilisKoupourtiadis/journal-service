@@ -5,6 +5,7 @@ using static journal_service.Features.Journals.Commands.AddJournal;
 using static journal_service.Features.Journals.Queries.GetJournal;
 using static journal_service.Features.Journals.Commands.RemoveJournal;
 using static journal_service.Features.Journals.Commands.AddJournalEntry;
+using static journal_service.Features.Journals.Queries.GetJournalEntry;
 using journal_service.Features.Journals.Queries;
 
 namespace journal_service.Features.Journals;
@@ -23,7 +24,7 @@ public class JournalsController : ControllerBase
     {
         var journals = await mediator.Send(new GetAllJournalsQuery());
 
-        if (journals is null) 
+        if (journals is null)
             return NotFound();
 
         return Ok(journals);
@@ -37,9 +38,9 @@ public class JournalsController : ControllerBase
             Id = id
         };
 
-        var result = await mediator.Send(query);
+        var journal = await mediator.Send(query);
 
-        return Ok(result);
+        return Ok(journal);
     }
 
     [HttpPost]
@@ -53,14 +54,29 @@ public class JournalsController : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<ActionResult> RemoveJournal(Guid id)
     {
-        var command = new RemoveJournalCommand() 
-        { 
-            Id = id 
+        var command = new RemoveJournalCommand()
+        {
+            Id = id
         };
 
         await mediator.Send(command);
 
         return NoContent();
+    }
+
+    [HttpGet]
+    [Route("/api/[controller]/{patientId:guid}/entries/{journalEntryId}", Name = "GetJournalEntryAsync")]
+    public async Task<ActionResult<GetJournalEntryQuery>> GetJournalEntryAsync(Guid patientId, Guid journalEntryId)
+    {
+        var query = new GetJournalEntryQuery
+        {
+            PatientId = patientId,
+            JournalEntryId = journalEntryId
+        };
+
+        var journalEntry = await mediator.Send(query);
+
+        return Ok(journalEntry);
     }
 
     [HttpPost]
@@ -69,6 +85,12 @@ public class JournalsController : ControllerBase
     {
         var journalEntry = await mediator.Send(command);
 
-        return Created("", journalEntry);
+        var routeValues = new
+        {
+            patientId = journalEntry.PatientId,
+            journalEntryId = journalEntry.Id
+        };
+
+        return CreatedAtRoute("GetJournalEntryAsync", routeValues, journalEntry);
     }
 }

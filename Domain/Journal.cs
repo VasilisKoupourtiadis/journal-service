@@ -15,4 +15,6 @@ public class Journal
     public ICollection<JournalEntry> Entries { get; private set; } = new List<JournalEntry>();
 
     public void AddEntry(JournalEntry entry) => Entries.Add(entry);
+
+    public JournalEntry GetJournalEntry(Guid id) => Entries.FirstOrDefault(x => x.Id == id);
 }
