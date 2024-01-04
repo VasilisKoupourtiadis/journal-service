@@ -13,4 +13,6 @@ public interface IJournalService
     void RemoveJournal(Journal journal);
 
     void AddJournalEntry(Journal journal, JournalEntry journalEntry);
+
+    void RemoveJournalEntry(JournalEntry journalEntry);
 }

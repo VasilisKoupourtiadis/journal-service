@@ -7,6 +7,7 @@ using static journal_service.Features.Journals.Commands.RemoveJournal;
 using static journal_service.Features.Journals.Commands.AddJournalEntry;
 using static journal_service.Features.Journals.Queries.GetJournalEntry;
 using static journal_service.Features.Journals.Queries.GetAllJournalEntriesForPatient;
+using static journal_service.Features.Journals.Commands.RemoveJournalEntry;
 using journal_service.Features.Journals.Queries;
 
 namespace journal_service.Features.Journals;
@@ -107,5 +108,20 @@ public class JournalsController : ControllerBase
         };
 
         return CreatedAtRoute("GetJournalEntryAsync", routeValues, journalEntry);
+    }
+
+    [HttpDelete]
+    [Route("/api/[controller]/{patientId:guid}/entries/{journalEntryId}")]
+    public async Task<ActionResult> RemoveJournalEntry(Guid patientId, Guid journalEntryId)
+    {
+        var command = new RemoveJournalEntryCommand
+        { 
+            PatientId = patientId, 
+            JournalEntryId = journalEntryId 
+        };
+
+        await mediator.Send(command);
+
+        return NoContent();
     }
 }

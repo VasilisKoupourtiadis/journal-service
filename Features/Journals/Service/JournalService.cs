@@ -29,5 +29,8 @@ public class JournalService : IJournalService
         journal.AddEntry(journalEntry);
 
         context.Add(journalEntry);
-    }    
+    }
+    
+    public void RemoveJournalEntry(JournalEntry journalEntry) =>
+        context.Remove(journalEntry);
 }
