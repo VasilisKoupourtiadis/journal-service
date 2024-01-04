@@ -26,4 +26,11 @@ public class JournalEntry
     public Guid JournalId { get; private set; }
 
     public Journal Journal { get; private set; }
+
+    public void UpdateJournalEntry(string entryBy, string entry, Guid journalId)
+    {
+        EntryBy = entryBy;
+        Entry = entry;
+        JournalId = journalId;
+    }
 }

@@ -8,6 +8,7 @@ using static journal_service.Features.Journals.Commands.AddJournalEntry;
 using static journal_service.Features.Journals.Queries.GetJournalEntry;
 using static journal_service.Features.Journals.Queries.GetAllJournalEntriesForPatient;
 using static journal_service.Features.Journals.Commands.RemoveJournalEntry;
+using static journal_service.Features.Journals.Commands.UpdateJournalEntry;
 using journal_service.Features.Journals.Queries;
 
 namespace journal_service.Features.Journals;
@@ -119,6 +120,20 @@ public class JournalsController : ControllerBase
             PatientId = patientId, 
             JournalEntryId = journalEntryId 
         };
+
+        await mediator.Send(command);
+
+        return NoContent();
+    }
+
+    [HttpPut]
+    [Route("/api/[controller]/{patientId:guid}/entries/{journalEntryId}")]
+    public async Task<ActionResult> UpdateJournalEntry(Guid patientId, Guid journalEntryId, UpdateJournalEntryCommand command)
+    {
+        if (patientId != command.PatientId)
+            return Conflict($"Id mismatch. Request path Id [${patientId}] and request body Id [${command.PatientId}] do not match");
+        else if (journalEntryId != command.Id)
+            return Conflict($"Id mismatch. Request path Id [${journalEntryId}] and request body Id [${command.Id}] do not match");
 
         await mediator.Send(command);
 
