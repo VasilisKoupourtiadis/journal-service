@@ -1,4 +1,4 @@
-# Journal Serive API
+# Journal Service API
 
 This is an ASP.NET Core Web API that manages patients and their journals
 
