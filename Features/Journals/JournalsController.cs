@@ -22,8 +22,13 @@ public class JournalsController : ControllerBase
     public JournalsController(IMediator mediator) =>
         (this.mediator) = (mediator);
 
+    /// <summary>
+    /// Get all journals
+    /// </summary>
+    /// <returns>A collection of the journals</returns>
+    /// <response code="200">Returns a collection of all the journals</response>
     [HttpGet]
-    public async Task<ActionResult<ICollection<JournalsResult>>> GetJournalsAsync()
+    public async Task<ActionResult<ICollection<JournalsResult>>> GetJournals()
     {
         var journals = await mediator.Send(new GetAllJournalsQuery());
 
@@ -33,8 +38,13 @@ public class JournalsController : ControllerBase
         return Ok(journals);
     }
 
+    /// <summary>
+    /// Get a journal
+    /// </summary>
+    /// <returns>A journal</returns>
+    /// <response code="200">Returns a journal</response>
     [HttpGet("{id:guid}", Name = "GetJournalAsync")]
-    public async Task<ActionResult<GetJournal.JournalResult>> GetJournalAsync(Guid id)
+    public async Task<ActionResult<GetJournal.JournalResult>> GetJournal(Guid id)
     {
         var query = new GetJournalQuery()
         {
@@ -46,6 +56,14 @@ public class JournalsController : ControllerBase
         return Ok(journal);
     }
 
+    /// <summary>
+    /// Add a journal
+    /// </summary>
+    /// <returns></returns>
+    /// <response code="201">
+    /// Returns an indicator that the resource has been created 
+    /// and sets the location header for where the newly created resource can be found
+    /// </response>
     [HttpPost]
     public async Task<ActionResult> AddJournal([FromBody] AddJournalCommand command)
     {
@@ -54,6 +72,11 @@ public class JournalsController : ControllerBase
         return CreatedAtRoute("GetJournalAsync", new { id = journal.Id }, journal);
     }
 
+    /// <summary>
+    /// Delete a journal
+    /// </summary>
+    /// <returns></returns>
+    /// <response code="204"></response>
     [HttpDelete("{id:guid}")]
     public async Task<ActionResult> RemoveJournal(Guid id)
     {
@@ -67,9 +90,14 @@ public class JournalsController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Get all journal entries for a patient
+    /// </summary>
+    /// <returns>A collection of all journal entries for a patient</returns>
+    /// <response code="200">Returns a collection of all journal entries for a patient</response>
     [HttpGet]
     [Route("/api/[controller]/{patientId:guid}/entries")]
-    public async Task<ActionResult<ICollection<JournalEntriesResult>>> GetJournalEntriesAsync(Guid patientId)
+    public async Task<ActionResult<ICollection<JournalEntriesResult>>> GetJournalEntries(Guid patientId)
     {
         var query = new GetAllJournalEntriesForPatientQuery
         {
@@ -81,9 +109,14 @@ public class JournalsController : ControllerBase
         return Ok(journals);
     }
 
+    /// <summary>
+    /// Get a patient's journal entry
+    /// </summary>
+    /// <returns>A journal entry for a patient</returns>
+    /// <response code="200">Returns a journal entry for a patient</response>
     [HttpGet]
     [Route("/api/[controller]/{patientId:guid}/entries/{journalEntryId}", Name = "GetJournalEntryAsync")]
-    public async Task<ActionResult<GetJournalEntryQuery>> GetJournalEntryAsync(Guid patientId, Guid journalEntryId)
+    public async Task<ActionResult<GetJournalEntryQuery>> GetJournalEntry(Guid patientId, Guid journalEntryId)
     {
         var query = new GetJournalEntryQuery
         {
@@ -96,6 +129,14 @@ public class JournalsController : ControllerBase
         return Ok(journalEntry);
     }
 
+    /// <summary>
+    /// Add a journal entry to a patients journal
+    /// </summary>
+    /// <returns></returns>
+    /// <response code="201">
+    /// Returns an indicator that the resource has been created 
+    /// and sets the location header for where the newly created resource can be found
+    /// </response>
     [HttpPost]
     [Route("/api/[controller]/entry")]
     public async Task<ActionResult> AddJournalEntry([FromBody] AddJournalEntryCommand command)
@@ -111,6 +152,11 @@ public class JournalsController : ControllerBase
         return CreatedAtRoute("GetJournalEntryAsync", routeValues, journalEntry);
     }
 
+    /// <summary>
+    /// Delete a patient's journal entry
+    /// </summary>
+    /// <returns></returns>
+    /// <response code="204"></response>
     [HttpDelete]
     [Route("/api/[controller]/{patientId:guid}/entries/{journalEntryId}")]
     public async Task<ActionResult> RemoveJournalEntry(Guid patientId, Guid journalEntryId)
@@ -126,6 +172,12 @@ public class JournalsController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Update a patient's journal entry
+    /// </summary>
+    /// <returns></returns>
+    /// <response code="204"></response>
+    /// <response code="409">If an Id mismatch occurs</response>
     [HttpPut]
     [Route("/api/[controller]/{patientId:guid}/entries/{journalEntryId}")]
     public async Task<ActionResult> UpdateJournalEntry(Guid patientId, Guid journalEntryId, UpdateJournalEntryCommand command)

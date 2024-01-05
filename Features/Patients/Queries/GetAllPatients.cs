@@ -32,7 +32,8 @@ public class GetAllPatients
 
         public async Task<ICollection<PatientResult>> Handle(GetPatientsQuery request, CancellationToken cancellationToken)
         {
-            var patients = await serviceManager.Patient.GetAllPatientsAsync();
+            var patients = await serviceManager.Patient.GetAllPatientsAsync()
+                ?? throw new ArgumentNullException("Could not get patients");
 
             var results = mapper.Map<ICollection<PatientResult>>(patients);
 
