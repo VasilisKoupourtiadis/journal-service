@@ -8,9 +8,9 @@ public class Journal
 
     public Guid Id { get; private set; } = Guid.NewGuid();
 
-    public Guid? PatientId { get; private set; }
+    public Guid PatientId { get; private set; }
     
-    public Patient? Patient { get; private set; }
+    public Patient Patient { get; private set; }
 
     public ICollection<JournalEntry> Entries { get; private set; } = new List<JournalEntry>();
 
